@@ -1,0 +1,76 @@
+# RESTful Natural Language Parse Service
+
+A RESTful service that service NLP parsing requests.  This makes
+the [NLP parsing project](https://github.com/plandes/clj-nlp-parse) available
+as a [REST service](https://en.wikipedia.org/wiki/Representational_state_transfer).
+
+
+## Documentation
+
+Additional [documentation](https://plandes.github.io/clj-nlp-serv/codox/index.html).
+
+
+## Usage
+
+You can use this as a command line program to generate a prettyprint parse tree
+of an utterance.  However, you have to let it know where the
+Stanford CoreNLP libraries are configured (see the
+[NLP parse project setup docs](https://github.com/plandes/clj-nlp-parse#setup)
+for more information.
+
+To create the command line utility, do the following:
+
+- Install [Leiningen](http://leiningen.org) (this is just a script)
+- Install [GNU make](https://www.gnu.org/software/make/)
+- Install [Git](https://git-scm.com)
+- Download the source:
+```bash
+   git clone https://github.com/clj-nlp-parse
+```
+- Follow the directions in [build section](#building)
+- Edit and uncomment the `makefile` to set the `ZMODEL` variable, which should
+  be set to a directory having the stanford POS model(s) in `standford/pos`.
+- Build the distribution binaries:
+```bash
+   make dist
+```
+If everything goes well and you are lucky a new folder should show up on your
+desktop with everything you need to run it.  To do that:
+```bash
+cd ~/Desktop/parse/bin
+./nlparse -d 'I am Paul Landes'
+```
+
+*Note:* I will make the distribution binaries available on request.
+
+
+## Building
+
+All [leiningen](http://leiningen.org) tasks will work in this project.  For
+additional build functionality (like building the command line application and
+git tag convenience utility functionality) clone the
+[Clojure build repo](https://github.com/plandes/clj-zenbuild) in the same
+(parent of this file) directory as this project:
+```bash
+   cd ..
+   git clone https://github.com/plandes/clj-zenbuild
+```
+
+
+## License
+
+Copyright © 2016, 2017 Paul Landes
+
+Apache License version 2.0
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
