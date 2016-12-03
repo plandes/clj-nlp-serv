@@ -25,23 +25,51 @@ To create the command line utility, do the following:
 - Install [Git](https://git-scm.com)
 - Download the source:
 ```bash
-   git clone https://github.com/clj-nlp-parse
+$ git clone https://github.com/clj-nlp-parse
 ```
 - Follow the directions in [build section](#building)
 - Edit and uncomment the `makefile` to set the `ZMODEL` variable, which should
   be set to a directory having the stanford POS model(s) in `standford/pos`.
 - Build the distribution binaries:
 ```bash
-   make dist
+$ make dist
 ```
 If everything goes well and you are lucky a new folder should show up on your
 desktop with everything you need to run it.  To do that:
 ```bash
-cd ~/Desktop/parse/bin
-./nlparse -d 'I am Paul Landes'
+$ cd ~/Desktop/parse/bin
+$ ./nlparse parse -u 'I am Paul Landes'
 ```
 
+Now start the RESTful service:
+```bash
+$ ./nlparse service -p 9000'
+```
+
+
 *Note:* I will make the distribution binaries available on request.
+
+### Usage Help
+
+For convenience, here's the usage docs you get when invoking with no
+parameters:
+```sql
+$ nlparse
+repl	start a repl either on the command line or headless with -h
+  -h, --headless            start an nREPL server
+  -p, --port NUMBER  12345  the port bind for the repl server
+
+ parse	parse an English utterance
+  -l, --level LOG LEVEL  INFO  Log level to set in the Log4J2 system.
+  -u, --utterance TEXT         The utterance to parse
+  -p, --pretty                 Pretty print the JSON string
+
+ service	start the agent parse website and service
+  -p, --port PORT  8080  the port bind for web site/service
+
+ version	Get the version of the application.
+  -g, --gitref
+```
 
 
 ## Building
