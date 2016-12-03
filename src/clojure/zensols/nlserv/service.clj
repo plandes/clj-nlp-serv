@@ -7,17 +7,23 @@
 (def ^:private utterance-param "utterance")
 (def ^:private pretty-param "pretty")
 
-(defn- is-malformed? [params]
+(defn- is-malformed?
+  "Make sure the [[utterance-param]] key is given in the request parameters."
+  [params]
   (not (contains? params utterance-param)))
 
-(defn parse [utterance & {:keys [pretty?]}]
+(defn parse
+  "Parse an human language utterance and return the JSON string."
+  [utterance & {:keys [pretty?]}]
   (->> (p/parse utterance)
        ((if pretty?
           (fn [panon]
             (with-out-str (json/pprint panon)))
           json/write-str))))
 
-(defn- handle-parse-utterance [params]
+(defn- handle-parse-utterance
+  "Service the parse utterance endpoint."
+  [params]
   (let [pretty? (get params pretty-param)]
     (log/infof "servicing request with parameter: <%s>" params)
     (-> (get params utterance-param)
