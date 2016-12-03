@@ -41,13 +41,41 @@ $ cd ~/Desktop/parse/bin
 $ ./nlparse parse -u 'I am Paul Landes'
 ```
 
-Now start the RESTful service:
+Now start the RESTful service, on say, port 9000 (defaults to 8080):
 ```bash
 $ ./nlparse service -p 9000'
 ```
 
+Use a web client to test the service using the *pretty print* option:
+```bash
+$ wget -q -O - 'http://localhost:9000/parse?utterance=My+name+is+Paul+Landes&pretty=true'
+```
 
-*Note:* I will make the distribution binaries available on request.
+The output:
+```json
+{"text":"My name is Paul Landes",
+ "mentions":
+ [{"entity-type":"PERSON",
+   "token-range":[3, 5],
+   "ner-tag":"PERSON",
+   "sent-index":0,
+   "char-range":[11, 22],
+   "text":"Paul Landes"}],
+ "tok-re-mentions":[],
+ "coref":
+ [{"id":1,
+   "mention":
+   [{"sent-index":1,
+     "token-range":[4, 6],
+     "head-index":5,
+     "gender":"MALE",
+     "animacy":"ANIMATE",
+     "type":"PROPER",
+     "number":"SINGULAR"}]},
+```
+
+**Note:** I will make the distribution binaries available on request.
+
 
 ### Usage Help
 
