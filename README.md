@@ -43,7 +43,7 @@ $ ./nlparse parse -u 'I am Paul Landes'
 
 Now start the RESTful service, on say, port 9000 (defaults to 8080):
 ```bash
-$ ./nlparse service -p 9000'
+$ ./nlparse service -p 9000
 ```
 
 Use a web client to test the service using the *pretty print* option:
