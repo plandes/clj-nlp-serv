@@ -1,0 +1,2 @@
+# tweet taken from https://github.com/dushyant89/SentimentAnalysis
+GET http://localhost:8080/parse?utterance=Beginning+JavaScript+and+CSS+Development+with+jQuery+%23javascript+%23css+%23jquery+http%3A%2F%2Fbit.ly%2FTO3e5
