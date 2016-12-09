@@ -1,0 +1,12 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+	"Name": "oplab.nlp/nlparse",
+	"Update": "true"
+    },
+    "Ports": [
+	{
+	    "ContainerPort": "9112"
+	}
+    ]
+}

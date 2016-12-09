@@ -36,8 +36,8 @@ testserv:
 .PHONY: docker
 docker:		$(DOCKER_PREFIX)
 
-$(DOCKER_PREFIX):
-#$(DOCKER_PREFIX):	$(DIST_BIN_DIR)
+.PHONY: prepare-docker
+prepare-docker:
 	@if [ -z "$(ZMODEL)" ] ; then \
 		echo "missing zensol model dependency" ; \
 		false ; \
@@ -47,8 +47,19 @@ $(DOCKER_PREFIX):
 	cp src/docker/Dockerfile $(DOCKER_PREFIX)
 	cp src/docker/$(ASBIN_NAME) $(DOCKER_PREFIX)/$(APP_SNAME_REF)/$(DIST_BIN_DNAME)
 	cp -r $(ZMODEL) $(DOCKER_PREFIX)
+
+$(DOCKER_PREFIX):	prepare-docker
+#$(DOCKER_PREFIX):	$(DIST_BIN_DIR) prepare-docker
 	docker rmi $(DOCKER_IMG_NAME) || true
 	docker build -t $(DOCKER_IMG_NAME) $(DOCKER_PREFIX)
+
+# http://glynjackson.org/weblog/tutorial-deploying-django-app-aws-elastic-beanstalk-using-docker/
+.PHONY:	elastic-bs-deploy
+elastic-bs-deploy:	prepare-docker
+	cp src/docker/Dockerrun.aws.json $(DOCKER_PREFIX)
+	cp -r src/docker/dot-elasticbeanstalk $(DOCKER_PREFIX)/.elasticbeanstalk
+#	( cd $(DOCKER_PREFIX) ; eb create )
+#	ERROR: Application version cannot be any larger than 512MB
 
 .PHONY: login
 login:

@@ -1,0 +1,10 @@
+branch-defaults:
+  default:
+    environment: null
+global:
+  application_name: nlpserv
+  default_ec2_keyname: uic-pl-spark
+  default_platform: Docker 1.11.2
+  default_region: us-east-1
+  profile: eb-cli
+  sc: null
