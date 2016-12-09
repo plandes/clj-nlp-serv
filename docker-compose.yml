@@ -1,0 +1,5 @@
+elasticsearch:
+  container_name: nlps
+  image: nlpserv
+  ports:
+    - "8081:9112"
