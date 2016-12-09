@@ -18,10 +18,11 @@ ZBHOME=			../clj-zenbuild
 MLINK=			$(ZMODEL)
 ADD_CLEAN+=		$(ASBIN_DIR) model
 
-all:	docker
+all:		info
 
 include $(ZBHOME)/src/mk/compile.mk
 include $(ZBHOME)/src/mk/dist.mk
+
 
 .PHONY: test
 test:
