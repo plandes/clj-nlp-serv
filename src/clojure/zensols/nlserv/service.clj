@@ -2,10 +2,26 @@
   (:require [clojure.data.json :as json]
             [clojure.tools.logging :as log])
   (:require [liberator.core :refer [defresource]])
-  (:require [zensols.nlparse.parse :as p]))
+  (:require [zensols.actioncli.dynamic :refer (defa-) :as dyn])
+  (:require [zensols.nlparse.config :as conf :refer (with-context)]
+            [zensols.nlparse.parse :as p]))
 
 (def ^:private utterance-param "utterance")
+
 (def ^:private pretty-param "pretty")
+
+(defa- parse-context-inst (conf/create-context))
+
+(defn set-parse-context [parse-context]
+  (reset! parse-context-inst parse-context))
+
+(defn- parse-context []
+  @parse-context-inst)
+
+(defn reset []
+  (set-parse-context (conf/create-context)))
+
+(dyn/register-purge-fn reset)
 
 (defn- is-malformed?
   "Make sure the [[utterance-param]] key is given in the request parameters."
@@ -15,11 +31,13 @@
 (defn parse
   "Parse an human language utterance and return the JSON string."
   [utterance & {:keys [pretty?]}]
-  (->> (p/parse utterance)
-       ((if pretty?
-          (fn [panon]
-            (with-out-str (json/pprint panon)))
-          json/write-str))))
+  (log/debugf "parsing (pretty?=%s) <%s>" pretty? utterance)
+  (with-context (parse-context)
+    (->> (p/parse utterance)
+         ((if pretty?
+            (fn [panon]
+              (with-out-str (json/pprint panon)))
+            json/write-str)))))
 
 (defn- handle-parse-utterance
   "Service the parse utterance endpoint."

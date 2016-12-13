@@ -14,9 +14,12 @@
 (defn- create-command-context []
   {:command-defs '((:repl zensols.actioncli repl repl-command)
                    (:parse zensols.nlserv handler parse-command)
-                   (:service zensols.nlserv handler start-server-command))
+                   (:service zensols.nlserv handler start-server-command)
+                   (:describe zensols.nlserv handler describe-component-command))
    :single-commands {:version version-info-command}})
 
 (defn -main [& args]
+  (lu/configure "nlp-serv-log4j2.xml")
+  (cli/set-program-name "nlparse")
   (let [command-context (create-command-context)]
     (apply cli/process-arguments command-context args)))

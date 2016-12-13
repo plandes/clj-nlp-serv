@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration status="OFF" monitorInterval="5">
+<configuration status="off">
     <appenders>
         <console name="console" target="SYSTEM_OUT">
-            <patternLayout pattern="%c{1}: %m%n"/>
+            <patternLayout pattern="nlparse: %c{1}: %m%n"/>
         </console>
     </appenders>
     <loggers>
