@@ -1,4 +1,4 @@
-(ns zensols.nlserv.handler
+n(ns zensols.nlserv.handler
   (:require [clojure.tools.logging :as log]
             [clojure.string :as s]
             [clojure.java.io :as io])
@@ -43,7 +43,6 @@
 
 (def ^:private components-option
   ["-c" "--components" (format "A comma separated list of pipeline components")
-   ;:default (conf/components-as-string)
    :required "TEXT"])
 
 (def describe-component-command
@@ -51,7 +50,7 @@
   {:description "component documentation"
    :options []
    :app (fn [opts & args]
-          (println (conf/print-component-documentation)))})
+          (conf/print-component-documentation))})
 
 (def parse-command
   "CLI command to parse an utterance and return as a JSON string"
