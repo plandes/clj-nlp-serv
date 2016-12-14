@@ -1,0 +1,91 @@
+#!/bin/sh
+
+SERV_NAME=nlparse
+
+## env config
+APP_NAME=${SERV_NAME}ctrl
+USAGE="usage: ${APP_NAME} <status|start|stop>"
+
+INST_DIR=${HOME}/opt/app
+NLPSERV_HOME=${INST_DIR}/${SERV_NAME}
+START_BIN=${NLPSERV_HOME}/bin/${SERV_NAME}
+LOGDIR=${NLPSERV_HOME}/log
+LOG=$LOGDIR/${SERV_NAME}.log
+
+## app config
+JAVA_OPTS="-Xms2g -Xmx10g -XX:+UseConcMarkSweepGC -Dzensols.model=${INST_DIR}/model"
+export JAVA_OPTS
+
+#COMPONENTS='tokenize,sentence'
+#COMPONENTS='tokenize,sentence,part-of-speech,morphology,named-entity-recognizer'
+#COMPONENTS='tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference'
+COMPONENTS='tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference,semantic-role-labeler'
+
+## funcs
+srvprocpid() {
+    PID=$(ps auwgxx | grep ${SERV_NAME} | grep -v grep | grep -v ${APP_NAME} | awk '{print $2}')
+}
+
+startsrvproc() {
+    srvprocpid
+    if [ -z "$PID" ] ; then
+	echo "starting ${SERV_NAME}..."
+	mkdir -p $LOGDIR
+	nohup /bin/sh ${START_BIN} service -c ${COMPONENTS} -p 9100 > ${LOG} 2>&1 &
+    else
+	echo "already running at $PID"
+    fi
+}
+
+stopsrvproc() {
+    srvprocpid
+    if [ ! -z "$PID" ] ; then
+	echo "killing $PID..."
+	kill $PID
+    else
+	echo "no service running"
+    fi
+}
+
+status() {
+    srvprocpid
+    if [ ! -z "$PID" ] ; then
+	echo "${SERV_NAME} running at $PID..."
+    else
+	echo "no service running"
+    fi
+}
+
+case "$1" in
+    login)
+	ssh -i $PEM ${USER}@${HOST}
+	;;
+
+    start)
+	startsrvproc
+	;;
+
+    stop)
+	stopsrvproc
+	;;
+
+    restart)
+	stopsrvproc
+	sleep 1
+	startsrvproc
+	;;
+
+    status)
+	status
+	;;
+
+    info)
+	echo "home: $NLPSERV_HOME"
+	echo "start-script: $START_BIN"
+	echo "log: $LOG"
+	echo "java-ops: ${JAVA_OPTS}"
+	;;
+
+    *)
+	echo $USAGE
+esac

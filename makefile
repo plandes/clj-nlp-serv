@@ -33,8 +33,8 @@ test:
 testserv:
 	wget -q -O - 'http://localhost:8080/parse?utterance=My+name+is+Paul+Landes&pretty=true'
 
-.PHONY: docker
-docker:		$(DOCKER_PREFIX)
+.PHONY: dockerdist
+dockerdist:	$(DOCKER_PREFIX)
 
 .PHONY: prepare-docker
 prepare-docker:
@@ -52,6 +52,11 @@ $(DOCKER_PREFIX):	prepare-docker
 #$(DOCKER_PREFIX):	$(DIST_BIN_DIR) prepare-docker
 	docker rmi $(DOCKER_IMG_NAME) || true
 	docker build -t $(DOCKER_IMG_NAME) $(DOCKER_PREFIX)
+
+.PHONY: ec2dist
+ec2dist:	prepare-docker
+	rm $(DOCKER_PREFIX)/$(APP_SNAME_REF)/$(DIST_BIN_DNAME)/$(ASBIN_NAME)
+	cp src/sh/* $(DOCKER_PREFIX)
 
 # http://glynjackson.org/weblog/tutorial-deploying-django-app-aws-elastic-beanstalk-using-docker/
 .PHONY:	elastic-bs-deploy
