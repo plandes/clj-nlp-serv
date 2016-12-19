@@ -5,6 +5,15 @@ the [NLP parsing project](https://github.com/plandes/clj-nlp-parse) available
 as a [REST service](https://en.wikipedia.org/wiki/Representational_state_transfer).
 
 
+## Obtaining
+
+This project is designed to be used as a stand along application *and* a
+library so you can add and use your own pipeline components.  For the library,
+in your `project.clj` file, add:
+
+[![Clojars Project](https://clojars.org/com.zensols.nlp/serv/latest-version.svg)](https://clojars.org/com.zensols.nlp/serv/)
+
+
 ## Documentation
 
 Additional [documentation](https://plandes.github.io/clj-nlp-serv/codox/index.html).
