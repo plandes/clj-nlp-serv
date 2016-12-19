@@ -14,20 +14,11 @@ DOCKER_IMG_NAME=	nlpserv
 # location of the http://github.com/plandes/clj-zenbuild cloned directory
 ZBHOME=			../clj-zenbuild
 
-# clean the generated app assembly file
-MLINK=			$(ZMODEL)
-ADD_CLEAN+=		$(ASBIN_DIR) model
-
-all:		info
+all:		dist
 
 include $(ZBHOME)/src/mk/compile.mk
+include $(ZBHOME)/src/mk/model.mk
 include $(ZBHOME)/src/mk/dist.mk
-
-
-.PHONY: test
-test:
-	ln -s $(MLINK) || true
-	lein test
 
 .PHONY:	testserv
 testserv:
