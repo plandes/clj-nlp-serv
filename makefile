@@ -39,8 +39,7 @@ prepare-docker:
 	cp src/docker/$(ASBIN_NAME) $(DOCKER_PREFIX)/$(APP_SNAME_REF)/$(DIST_BIN_DNAME)
 	cp -r $(ZMODEL) $(DOCKER_PREFIX)
 
-$(DOCKER_PREFIX):	prepare-docker
-#$(DOCKER_PREFIX):	$(DIST_BIN_DIR) prepare-docker
+$(DOCKER_PREFIX):	$(DIST_BIN_DIR) prepare-docker
 	docker rmi $(DOCKER_IMG_NAME) || true
 	docker build -t $(DOCKER_IMG_NAME) $(DOCKER_PREFIX)
 
