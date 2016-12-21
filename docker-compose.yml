@@ -1,4 +1,4 @@
-elasticsearch:
+nlpserv:
   container_name: nlps
   image: nlpserv
   ports:
