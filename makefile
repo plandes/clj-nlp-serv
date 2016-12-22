@@ -4,28 +4,27 @@
 APP_NAME=		nlparse
 APP_SCR_NAME=		$(APP_NAME)
 APP_START_SCR=		src/sh/nlparsectrl
+ZMODEL ?=		$(HOME)/opt/nlp/model
+DOCKER_IMG_NAME=	nlpservice
 
 # docker config
+DOCKER_CMD=		docker
 DOCKER_USER=		$(GITUSER)
 DOCKER_DIST_PREFIX=	target/docker-app-dist
 DOCKER_PREFIX=		target/docker-image
 DOCKER_IMG_PREFIX=	$(DOCKER_PREFIX)/img
-DOCKER_IMG_NAME=	nlpserv
-DOCKER_IMG=		$(DOCKER_USER)/$(DOCKER_IMG_NAME):$(VER)
-
-# where the stanford model files are located
-#ZMODEL=		$(HOME)/opt/nlp/model
+DOCKER_IMG=		$(DOCKER_USER)/$(DOCKER_IMG_NAME)
 
 # location of the http://github.com/plandes/clj-zenbuild cloned directory
 ZBHOME=			../clj-zenbuild
 
-all:		dockerdist
+all:		info
+	@echo "model: $(ZMODEL)"
 
 include $(ZBHOME)/src/mk/compile.mk
 include $(ZBHOME)/src/mk/model.mk
 include $(ZBHOME)/src/mk/dist.mk
 
-tmp:
 
 .PHONY:	testserv
 testserv:
@@ -49,8 +48,18 @@ $(DOCKER_PREFIX):	$(DOCKER_DIST_PREFIX)
 
 .PHONY: dockerdist
 dockerdist:	$(DOCKER_PREFIX)
-	docker rmi $(DOCKER_IMG) || true
-	docker build -t $(DOCKER_IMG) $(DOCKER_PREFIX)
+	$(DOCKER_CMD) rmi $(DOCKER_IMG) || true
+	$(DOCKER_CMD) build -t $(DOCKER_IMG) $(DOCKER_PREFIX)
+	$(DOCKER_CMD) tag $(DOCKER_IMG) $(DOCKER_IMG):$(VER)
+
+.PHONY:	dockerpush
+dockerpush:	dockerdist
+	$(DOCKER_CMD) push $(DOCKER_IMG)
+
+.PHONY: dockerrm
+dockerrm:
+	$(DOCKER_CMD) rmi $(DOCKER_IMG):$(VER) || true
+	$(DOCKER_CMD) rmi $(DOCKER_IMG) || true
 
 .PHONY: ec2dist
 ec2dist:	prepare-docker
@@ -67,8 +76,8 @@ elastic-bs-deploy:	prepare-docker
 
 .PHONY: login
 login:
-	docker exec -it $(DOCKER_IMG_NAME) bash
+	$(DOCKER_CMD) exec -it $(DOCKER_IMG_NAME) bash
 
 .PHONY: logs
 logs:
-	docker logs nlps -f
+	$(DOCKER_CMD) logs nlps -f

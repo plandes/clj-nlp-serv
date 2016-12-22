@@ -4,6 +4,15 @@ A RESTful service that service NLP parsing requests.  This makes
 the [NLP parsing project](https://github.com/plandes/clj-nlp-parse) available
 as a [REST service](https://en.wikipedia.org/wiki/Representational_state_transfer).
 
+Sections:
+* [Obtaining](#obtaining)
+* [Documentation](#documentation)
+* [Usage](#usage)
+  * [Help](#usage-help)
+* [Docker](#docker)
+* [Building](#building)
+* [License](#license)
+
 
 ## Obtaining
 
@@ -106,6 +115,23 @@ repl	start a repl either on the command line or headless with -h
 
  version	Get the version of the application.
   -g, --gitref
+```
+
+
+## Docker
+
+A [docker image is available](https://hub.docker.com/r/plandes/nlpservice/)
+with an install of this service at [Docker Hub](http://hub.docker.com).  Here's
+an example of how to use the image in a `docker-compose.yml`:
+```yaml
+nlpserv:
+  container_name: nlps
+  image: plandes/nlpserv:0.0.2
+  ports:
+    - "9100:9100"
+  environment:
+    COMPONENTS: tokenize,sentence,stopword,part-of-speech,morphology
+    PORT: 9100
 ```
 
 

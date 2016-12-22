@@ -1,6 +1,6 @@
 nlpserv:
   container_name: nlps
-  image: plandes/nlpserv:0.0.2
+  image: plandes/nlpservice:0.0.3
   ports:
     - "9100:9100"
   environment:
