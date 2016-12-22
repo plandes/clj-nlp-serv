@@ -3,10 +3,15 @@
 # edit these if you want
 APP_NAME=		nlparse
 APP_SCR_NAME=		$(APP_NAME)
+APP_START_SCR=		src/sh/nlparsectrl
 
 # docker config
+DOCKER_USER=		$(GITUSER)
+DOCKER_DIST_PREFIX=	target/docker-app-dist
 DOCKER_PREFIX=		target/docker-image
+DOCKER_IMG_PREFIX=	$(DOCKER_PREFIX)/img
 DOCKER_IMG_NAME=	nlpserv
+DOCKER_IMG=		$(DOCKER_USER)/$(DOCKER_IMG_NAME):$(VER)
 
 # where the stanford model files are located
 #ZMODEL=		$(HOME)/opt/nlp/model
@@ -14,34 +19,38 @@ DOCKER_IMG_NAME=	nlpserv
 # location of the http://github.com/plandes/clj-zenbuild cloned directory
 ZBHOME=			../clj-zenbuild
 
-all:		dist
+all:		dockerdist
 
 include $(ZBHOME)/src/mk/compile.mk
 include $(ZBHOME)/src/mk/model.mk
 include $(ZBHOME)/src/mk/dist.mk
 
+tmp:
+
 .PHONY:	testserv
 testserv:
 	wget -q -O - 'http://localhost:9100/parse?utterance=My+name+is+Paul+Landes&pretty=true'
 
-.PHONY: dockerdist
-dockerdist:	$(DOCKER_PREFIX)
+$(DOCKER_DIST_PREFIX):
+	make DIST_PREFIX=$(DOCKER_DIST_PREFIX) dist
 
-.PHONY: prepare-docker
-prepare-docker:
+$(DOCKER_PREFIX):	$(DOCKER_DIST_PREFIX)
 	@if [ -z "$(ZMODEL)" ] ; then \
 		echo "missing zensol model dependency" ; \
 		false ; \
 	fi
 	mkdir -p $(DOCKER_PREFIX)
-	cp -r $(DIST_PREFIX)/$(APP_NAME_REF) $(DOCKER_PREFIX)
+	mkdir -p $(DOCKER_IMG_PREFIX)
+	cp -r $(DOCKER_DIST_PREFIX)/$(APP_NAME_REF) $(DOCKER_IMG_PREFIX)
+	cp $(APP_START_SCR) $(DOCKER_IMG_PREFIX)
 	cp src/docker/Dockerfile $(DOCKER_PREFIX)
-	cp src/docker/$(ASBIN_NAME) $(DOCKER_PREFIX)/$(APP_SNAME_REF)/$(DIST_BIN_DNAME)
-	cp -r $(ZMODEL) $(DOCKER_PREFIX)
+	cp src/docker/$(ASBIN_NAME) $(DOCKER_IMG_PREFIX)/$(APP_SNAME_REF)/$(DIST_BIN_DNAME)
+	cp -r $(ZMODEL) $(DOCKER_IMG_PREFIX)
 
-$(DOCKER_PREFIX):	$(DIST_BIN_DIR) prepare-docker
-	docker rmi $(DOCKER_IMG_NAME) || true
-	docker build -t $(DOCKER_IMG_NAME) $(DOCKER_PREFIX)
+.PHONY: dockerdist
+dockerdist:	$(DOCKER_PREFIX)
+	docker rmi $(DOCKER_IMG) || true
+	docker build -t $(DOCKER_IMG) $(DOCKER_PREFIX)
 
 .PHONY: ec2dist
 ec2dist:	prepare-docker

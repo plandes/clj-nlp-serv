@@ -1,5 +1,7 @@
 nlpserv:
   container_name: nlps
-  image: nlpserv
+  image: plandes/nlpserv:0.0.2
   ports:
     - "9100:9100"
+  environment:
+    COMPONENTS: tokenize,sentence,stopword,part-of-speech,morphology

@@ -1,12 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 SERV_NAME=nlparse
 
 ## env config
 APP_NAME=${SERV_NAME}ctrl
-USAGE="usage: ${APP_NAME} <status|start|stop>"
+USAGE="usage: ${APP_NAME} <status|start|stop> [-d]"
 
-INST_DIR=${HOME}/opt/app
+INST_DIR=${INST_DIR:-${HOME}/opt/app}
+PORT=${PORT:-9100}
 NLPSERV_HOME=${INST_DIR}/${SERV_NAME}
 START_BIN=${NLPSERV_HOME}/bin/${SERV_NAME}
 LOGDIR=${NLPSERV_HOME}/log
@@ -16,10 +17,9 @@ LOG=$LOGDIR/${SERV_NAME}.log
 JAVA_OPTS="-Xms2g -Xmx10g -XX:+UseConcMarkSweepGC -Dzensols.model=${INST_DIR}/model"
 export JAVA_OPTS
 
-#COMPONENTS='tokenize,sentence'
-#COMPONENTS='tokenize,sentence,part-of-speech,morphology,named-entity-recognizer'
-#COMPONENTS='tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference'
-COMPONENTS='tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference,semantic-role-labeler'
+if [ -z "$COMPONENTS" ] ; then
+    COMPONENTS='tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference,semantic-role-labeler'
+fi
 
 ## funcs
 srvprocpid() {
@@ -27,11 +27,19 @@ srvprocpid() {
 }
 
 startsrvproc() {
+    FG=$1
     srvprocpid
     if [ -z "$PID" ] ; then
-	echo "starting ${SERV_NAME}..."
-	mkdir -p $LOGDIR
-	nohup /bin/sh ${START_BIN} service -c ${COMPONENTS} -p 9100 > ${LOG} 2>&1 &
+	echo "components: $COMPONENTS"
+	echo "port: $PORT"
+	if [ $FG ] ; then
+	    echo "starting ${SERV_NAME} in foreground..."
+	    /bin/bash ${START_BIN} service -c ${COMPONENTS} -p ${PORT}
+	else
+	    echo "starting ${SERV_NAME} in background..."
+	    mkdir -p $LOGDIR
+	    nohup /bin/bash ${START_BIN} service -c ${COMPONENTS} -p ${PORT} > ${LOG} 2>&1 &
+	fi
     else
 	echo "already running at $PID"
     fi
@@ -62,7 +70,11 @@ case "$1" in
 	;;
 
     start)
-	startsrvproc
+	if [ "$2" != "-d" ] ; then
+	    startsrvproc 1
+	else
+	    startsrvproc
+	fi
 	;;
 
     stop)

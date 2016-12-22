@@ -1,7 +1,8 @@
 FROM java:8
 
-COPY nlparse /usr/src/app/nlparse
-COPY model /usr/src/app/model
+COPY img /usr/src/app
 WORKDIR /usr/src/app
+ENV INST_DIR .
+ENV PORT 9100
 EXPOSE 9100
-CMD ["nlparse/bin/nlparse", "service", "-p", "9100"]
+CMD ./nlparsectrl start
