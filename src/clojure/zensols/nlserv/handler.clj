@@ -77,7 +77,7 @@
    [(lu/log-level-set-option)
     components-option
     ["-p" "--port PORT" "the port bind for web site/service"
-     :default 8080
+     :default 9100
      :parse-fn #(Integer/parseInt %)
      :validate [#(< 0 % 0x10000) "Must be a number between 0 and 65536"]]]
    :app (fn [{:keys [components port]} & args]

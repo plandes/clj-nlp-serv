@@ -3,4 +3,5 @@ FROM java:8
 COPY nlparse /usr/src/app/nlparse
 COPY model /usr/src/app/model
 WORKDIR /usr/src/app
+EXPOSE 9100
 CMD ["nlparse/bin/nlparse", "service", "-p", "9100"]

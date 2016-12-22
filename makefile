@@ -22,7 +22,7 @@ include $(ZBHOME)/src/mk/dist.mk
 
 .PHONY:	testserv
 testserv:
-	wget -q -O - 'http://localhost:8080/parse?utterance=My+name+is+Paul+Landes&pretty=true'
+	wget -q -O - 'http://localhost:9100/parse?utterance=My+name+is+Paul+Landes&pretty=true'
 
 .PHONY: dockerdist
 dockerdist:	$(DOCKER_PREFIX)
