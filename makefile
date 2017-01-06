@@ -14,7 +14,7 @@ DOCKER_OBJS ?=		$(ZMODEL_TARG)
 # location of the http://github.com/plandes/clj-zenbuild cloned directory
 ZBHOME=			../clj-zenbuild
 
-all:		dockerdist
+all:		info
 	@echo "model: $(ZMODEL)"
 
 include $(ZBHOME)/src/mk/compile.mk

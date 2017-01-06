@@ -1,9 +1,10 @@
 #!/bin/bash
 
-SERV_NAME=nlparse
+## service name
+SERV_NAME=${SERV_NAME:-nlparse}
 
 ## env config
-APP_NAME=${SERV_NAME}ctrl
+APP_NAME=${APP_NAME:-${SERV_NAME}ctrl}
 USAGE="usage: ${APP_NAME} <status|start|stop> [-d]"
 
 INST_DIR=${INST_DIR:-${HOME}/opt/app}
@@ -17,7 +18,7 @@ LOG=$LOGDIR/${SERV_NAME}.log
 JAVA_OPTS="-Xms2g -Xmx10g -XX:+UseConcMarkSweepGC -Dzensols.model=${INST_DIR}/model"
 export JAVA_OPTS
 
-if [ -z "$COMPONENTS" ] ; then
+if [ -z "$COMPONENTS" -a "$COMPONENTS" != "-" ] ; then
     COMPONENTS='tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference,semantic-role-labeler'
 fi
 
@@ -30,15 +31,20 @@ startsrvproc() {
     FG=$1
     srvprocpid
     if [ -z "$PID" ] ; then
+	ARGS="-p ${PORT}"
+	if [ "$COMPONENTS" != "-" ] ; then
+	    ARGS="${ARGS} -c ${COMPONENTS}"
+	fi
 	echo "components: $COMPONENTS"
 	echo "port: $PORT"
 	if [ $FG ] ; then
 	    echo "starting ${SERV_NAME} in foreground..."
-	    /bin/bash ${START_BIN} service -c ${COMPONENTS} -p ${PORT}
+	    echo /bin/bash ${START_BIN} service ${ARGS}
+	    exit 0
 	else
 	    echo "starting ${SERV_NAME} in background..."
 	    mkdir -p $LOGDIR
-	    nohup /bin/bash ${START_BIN} service -c ${COMPONENTS} -p ${PORT} > ${LOG} 2>&1 &
+	    nohup /bin/bash ${START_BIN} service ${ARGS} > ${LOG} 2>&1 &
 	fi
     else
 	echo "already running at $PID"
@@ -65,10 +71,6 @@ status() {
 }
 
 case "$1" in
-    login)
-	ssh -i $PEM ${USER}@${HOST}
-	;;
-
     start)
 	if [ "$2" != "-d" ] ; then
 	    startsrvproc 1

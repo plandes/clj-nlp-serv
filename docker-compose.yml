@@ -4,4 +4,4 @@ nlpserv:
   ports:
     - "9100:9100"
   environment:
-    COMPONENTS: tokenize,sentence,stopword,part-of-speech,morphology
+    COMPONENTS: tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference,semantic-role-labeler
