@@ -13,6 +13,7 @@
 (defa- parse-context-inst (conf/create-context))
 
 (defn set-parse-context [parse-context]
+  (log/debugf "setting parse context: <%s>" (pr-str parse-context))
   (reset! parse-context-inst parse-context))
 
 (defn- parse-context []

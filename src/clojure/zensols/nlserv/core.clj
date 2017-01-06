@@ -4,6 +4,8 @@
   (:require [serv.version])
   (:gen-class :main true))
 
+(def program-name "nlparse")
+
 (def ^:private version-info-command
   {:description "Get the version of the application."
    :options [["-g" "--gitref"]]
@@ -20,6 +22,6 @@
 
 (defn -main [& args]
   (lu/configure "nlp-serv-log4j2.xml")
-  (cli/set-program-name "nlparse")
+  (cli/set-program-name program-name)
   (let [command-context (create-command-context)]
     (apply cli/process-arguments command-context args)))
