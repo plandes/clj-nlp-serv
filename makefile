@@ -3,7 +3,8 @@
 # edit these if you want
 APP_NAME=		nlparse
 APP_SCR_NAME=		$(APP_NAME)
-APP_START_SCR=		src/sh/nlparsectrl
+DOCKER_START_SCR=	src/sh/nlparsectrl
+
 ZMODEL_NAME=		model
 ZMODEL ?=		$(HOME)/opt/nlp/$(ZMODEL_NAME)
 ZMODEL_TARG=		$(DOCKER_IMG_PREFIX)/$(ZMODEL_NAME)
