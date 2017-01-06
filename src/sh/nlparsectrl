@@ -39,8 +39,7 @@ startsrvproc() {
 	echo "port: $PORT"
 	if [ $FG ] ; then
 	    echo "starting ${SERV_NAME} in foreground..."
-	    echo /bin/bash ${START_BIN} service ${ARGS}
-	    exit 0
+	    /bin/bash ${START_BIN} service ${ARGS}
 	else
 	    echo "starting ${SERV_NAME} in background..."
 	    mkdir -p $LOGDIR
