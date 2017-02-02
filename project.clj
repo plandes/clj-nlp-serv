@@ -5,11 +5,14 @@
             :url "https://www.apache.org/licenses/LICENSE-2.0"
             :distribution :repo}
   :plugins [[lein-codox "0.10.1"]
-            [org.clojars.cvillecsteele/lein-git-version "1.0.3"]]
+            [org.clojars.cvillecsteele/lein-git-version "1.2.7"]]
   :codox {:metadata {:doc/format :markdown}
           :project {:name "RESTful NLP parse service"}
           :output-path "target/doc/codox"
           :source-uri "https://github.com/plandes/clj-nlp-serv/blob/v{version}/{filepath}#L{line}"}
+  :git-version {:root-ns "zensols.nlserv"
+                :path "src/clojure/zensols/nlserv"
+                :version-cmd "git describe --match v*.* --abbrev=4 --dirty=-dirty"}
   :source-paths ["src/clojure"]
   :java-source-paths ["src/java"]
   :javac-options ["-Xlint:unchecked"]
@@ -36,7 +39,7 @@
                  [org.clojure/data.json "0.2.6"]
 
                  ;; command line
-                 [com.zensols.nlp/parse "0.0.14"]]
+                 [com.zensols.nlp/parse "0.0.15"]]
   :pom-plugins [[org.codehaus.mojo/appassembler-maven-plugin "1.6"
                  {:configuration ([:programs
                                    [:program

@@ -12,7 +12,7 @@
             [zensols.actioncli.dynamic :refer (defa-)]
             [zensols.nlparse.config :as conf])
   (:require [zensols.nlserv.service :as service]
-            [serv.version :as ver]))
+            [zensols.nlserv.version :as ver]))
 
 (defa- server-inst)
 

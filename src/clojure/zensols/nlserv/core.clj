@@ -1,7 +1,7 @@
 (ns zensols.nlserv.core
   (:require [zensols.actioncli.parse :as cli]
             [zensols.actioncli.log4j2 :as lu])
-  (:require [serv.version])
+  (:require [zensols.nlserv.version :as ver])
   (:gen-class :main true))
 
 (def program-name "nlparse")
@@ -10,8 +10,8 @@
   {:description "Get the version of the application."
    :options [["-g" "--gitref"]]
    :app (fn [{refp :gitref} & args]
-          (println serv.version/version)
-          (if refp (println serv.version/gitref)))})
+          (println ver/version)
+          (if refp (println ver/gitref)))})
 
 (defn- create-command-context []
   {:command-defs '((:repl zensols.actioncli repl repl-command)
