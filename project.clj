@@ -48,6 +48,7 @@
                                   [:environmentSetupFileName "setupenv"])}]]
   :profiles {:uberjar {:aot [zensols.nlserv.core]}
              :appassem {:aot :all}
+             :snapshot {:git-version {:version-cmd "echo -snapshot"}}
              :dev
              {:jvm-opts
               ["-Dlog4j.configurationFile=test-resources/log4j2.xml" "-Xms4g" "-Xmx12g" "-XX:+UseConcMarkSweepGC"]
