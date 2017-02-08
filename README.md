@@ -137,15 +137,19 @@ nlpserv:
 
 ## Building
 
-All [leiningen](http://leiningen.org) tasks will work in this project.  For
-additional build functionality (like building the command line application and
-git tag convenience utility functionality) clone the
-[Clojure build repo](https://github.com/plandes/clj-zenbuild) in the same
-(parent of this file) directory as this project:
+To build from source, do the folling:
+
+- Install [Leiningen](http://leiningen.org) (this is just a script)
+- Install [GNU make](https://www.gnu.org/software/make/)
+- Install [Git](https://git-scm.com)
+- Download the source: `git clone https://github.com/clj-nlp-serv && cd clj-nlp-serv`
+- Download the make include files:
 ```bash
-   cd ..
-   git clone https://github.com/plandes/clj-zenbuild
+mkdir ../clj-zenbuild && wget -O - https://api.github.com/repos/plandes/clj-zenbuild/tarball | tar zxfv - -C ../clj-zenbuild --strip-components 1
 ```
+- Build the distribution binaries: `make dist`
+
+Note that you can also build a single jar file with all the dependencies with: `make uber`
 
 
 ## License
