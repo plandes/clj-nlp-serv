@@ -1,7 +1,7 @@
 nlpserv:
   container_name: nlps
-  image: plandes/nlpservice:0.0.3
+  image: plandes/nlpservice:0.0.7
   ports:
     - "9100:9100"
   environment:
-    COMPONENTS: tokenize,sentence,stopword,part-of-speech,morphology,named-entity-recognizer,parse-tree,coreference,semantic-role-labeler
+    COMPONENTS: tokenize,sentence,part-of-speech,morphology,stopword,named-entity-recognizer,parse-tree,sentiment,coreference,semantic-role-labeler
