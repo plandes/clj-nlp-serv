@@ -39,7 +39,7 @@
                  [org.clojure/data.json "0.2.6"]
 
                  ;; command line
-                 [com.zensols.nlp/parse "0.0.15"]]
+                 [com.zensols.nlp/parse "0.0.16"]]
   :pom-plugins [[org.codehaus.mojo/appassembler-maven-plugin "1.6"
                  {:configuration ([:programs
                                    [:program
