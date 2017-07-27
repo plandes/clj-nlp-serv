@@ -13,6 +13,7 @@ as a [REST service](https://en.wikipedia.org/wiki/Representational_state_transfe
     - [Usage Help](#usage-help)
 - [Docker](#docker)
 - [Building](#building)
+- [Changelog](#changelog)
 - [License](#license)
 
 <!-- markdown-toc end -->
