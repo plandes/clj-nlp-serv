@@ -19,7 +19,7 @@ JAVA_OPTS="-Xms2g -Xmx10g -XX:+UseConcMarkSweepGC -Dzensols.model=${INST_DIR}/mo
 export JAVA_OPTS
 
 if [ -z "$COMPONENTS" -a "$COMPONENTS" != "-" ] ; then
-    COMPONENTS='tokenize,sentence,part-of-speech,morphology,stopword,named-entity-recognizer,parse-tree,sentiment,coreference,semantic-role-labeler'
+    COMPONENTS='tokenize,sentence,part-of-speech,morphology,stopword,named-entity-recognizer,parse-tree,natural-logic,sentiment,coreference,semantic-role-labeler'
 fi
 
 ## funcs
