@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added annotations with version bump (see
   the
   [parse project](https://github.com/plandes/clj-nlp-parse/blob/master/CHANGELOG.md) for
-  more info:
+  more info):
   * Natural logic
   * Sentiment analysis
   
