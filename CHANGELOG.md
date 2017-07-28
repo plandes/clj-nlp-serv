@@ -25,6 +25,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Version bump
 
 
-[Unreleased]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.7...HEAD
+[Unreleased]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.8...HEAD
 [0.0.8]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.6...v0.0.7
