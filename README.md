@@ -135,7 +135,7 @@ nlpserv:
   ports:
     - "9100:9100"
   environment:
-    COMPONENTS: tokenize,sentence,stopword,part-of-speech,morphology
+    COMPONENTS: tokenize,sentence,part-of-speech,morphology,stopword
     PORT: 9100
 ```
 
