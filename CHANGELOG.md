@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.0.9] - 2017-09-01
 ### Changed
-- Tighter (unambiguous) deps.
+- Tighter (unambiguous) and up to date dependencies.
 
 ## [0.0.8] - 2017-07-27
 ### Added
