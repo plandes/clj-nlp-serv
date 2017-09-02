@@ -17,9 +17,6 @@
   :java-source-paths ["src/java"]
   :javac-options ["-Xlint:unchecked"]
   :jar-exclusions [#".gitignore"]
-  :exclusions [org.slf4j/slf4j-log4j12
-               log4j/log4j
-               ch.qos.logback/logback-classic]
   :dependencies [[org.clojure/clojure "1.8.0"]
 
                  ;; logging
@@ -29,7 +26,7 @@
                  [org.apache.logging.log4j/log4j-jcl "2.7"]
 
                  ;; web services
-                 [ring/ring-core "1.5.0"]
+                 [ring/ring-core "1.5.0" :exclusions [joda-time]]
                  [ring/ring-jetty-adapter "1.5.0"]
                  [org.eclipse.jetty/jetty-server "9.2.10.v20150310"]
                  [compojure "1.5.1"]
@@ -39,7 +36,7 @@
                  [org.clojure/data.json "0.2.6"]
 
                  ;; command line
-                 [com.zensols.nlp/parse "0.1.2"]]
+                 [com.zensols.nlp/parse "0.1.3"]]
   :pom-plugins [[org.codehaus.mojo/appassembler-maven-plugin "1.6"
                  {:configuration ([:programs
                                    [:program
@@ -49,8 +46,8 @@
   :profiles {:uberjar {:aot [zensols.nlserv.core]}
              :appassem {:aot :all}
              :snapshot {:git-version {:version-cmd "echo -snapshot"}}
-             :dev
+             :test
              {:jvm-opts
-              ["-Dlog4j.configurationFile=test-resources/log4j2.xml" "-Xms4g" "-Xmx12g" "-XX:+UseConcMarkSweepGC"]
-              :dependencies [[com.zensols/clj-append "1.0.5"]]}}
+              ["-Dlog4j.configurationFile=test-resources/log4j2.xml"
+               "-Xms4g" "-Xmx12g" "-XX:+UseConcMarkSweepGC"]}}
   :main zensols.nlserv.core)

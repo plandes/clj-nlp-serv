@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.0.9] - 2017-09-01
+### Changed
+- Tighter (unambiguous) deps.
+
 ## [0.0.8] - 2017-07-27
 ### Added
-- Added annotations with version bump (see
-  the
-  [parse project](https://github.com/plandes/clj-nlp-parse/blob/master/CHANGELOG.md) for
-  more info):
+- Added annotations with version bump (see the [parse project] for more info):
   * Natural logic
   * Sentiment analysis
   
@@ -25,6 +26,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Version bump
 
 
-[Unreleased]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.8...HEAD
+[Unreleased]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.9...HEAD
+[0.0.9]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/plandes/clj-nlp-serv/compare/v0.0.6...v0.0.7
+
+[parse project]: https://github.com/plandes/clj-nlp-parse/blob/master/CHANGELOG.md
