@@ -36,14 +36,15 @@
                  [org.clojure/data.json "0.2.6"]
 
                  ;; command line
-                 [com.zensols.nlp/parse "0.1.3"]]
+                 [com.zensols.nlp/parse "0.1.4"]]
   :pom-plugins [[org.codehaus.mojo/appassembler-maven-plugin "1.6"
                  {:configuration ([:programs
                                    [:program
                                     ([:mainClass "zensols.nlserv.core"]
                                      [:id "nlparse"])]]
                                   [:environmentSetupFileName "setupenv"])}]]
-  :profiles {:uberjar {:aot [zensols.nlserv.core]}
+  :profiles {:1.9 {:dependencies [[org.clojure/clojure "1.9.0"]]}
+             :uberjar {:aot [zensols.nlserv.core]}
              :appassem {:aot :all}
              :snapshot {:git-version {:version-cmd "echo -snapshot"}}
              :test

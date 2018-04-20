@@ -9,12 +9,11 @@
             [ring.middleware.params :refer [wrap-params]])
   (:require [zensols.actioncli.log4j2 :as lu]
             [zensols.actioncli.parse :refer (with-exception)]
-            [zensols.actioncli.dynamic :refer (defa-)]
             [zensols.nlparse.config :as conf])
   (:require [zensols.nlserv.service :as service]
             [zensols.nlserv.version :as ver]))
 
-(defa- server-inst)
+(defonce ^:private server-inst (atom nil))
 
 (def ^:dynamic *dump-jvm-on-error* true)
 

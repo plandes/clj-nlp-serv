@@ -2,7 +2,7 @@
   (:require [clojure.data.json :as json]
             [clojure.tools.logging :as log])
   (:require [liberator.core :refer [defresource]])
-  (:require [zensols.actioncli.dynamic :refer (defa-) :as dyn])
+  (:require [zensols.actioncli.dynamic :as dyn])
   (:require [zensols.nlparse.config :as conf :refer (with-context)]
             [zensols.nlparse.parse :as p]))
 
@@ -10,7 +10,7 @@
 
 (def ^:private pretty-param "pretty")
 
-(defa- parse-context-inst (conf/create-context))
+(defonce ^:private parse-context-inst (atom (conf/create-context)))
 
 (defn set-parse-context [parse-context]
   (log/debugf "setting parse context: <%s>" (pr-str parse-context))
